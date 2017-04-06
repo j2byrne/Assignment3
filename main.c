@@ -15,9 +15,15 @@ int main(void) {
 	//pointer to slot (boardSize - 1, boardSize -1)
 	struct slot *downRight;
 
+	printf("Working1");
+
 	//Creates the board
 	createBoard(BOARD_SIZE, &upLeft, &upRight, &downLeft, &downRight);
 
+	printf("Working2");
+
 	// randomly assigns each slot a random type
 	slotInitialize(&upLeft);
+
+	printBoard(&upLeft); // print board
 }

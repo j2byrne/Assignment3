@@ -48,4 +48,5 @@ struct slot{
 */
 
 void createBoard(int board_size, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
-void slotInitialize(struct slot **upLeft);
+void slotInitialize(struct slot **currSlot);
+void printBoard(struct slot **currSlot);

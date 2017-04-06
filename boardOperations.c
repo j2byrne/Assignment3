@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "operations.h"
 
@@ -6,7 +7,6 @@ void createBoard(int boardSize, struct slot **upLeft, struct slot **upRight, str
 	//The board is represented as a pointer of pointer to slots
 	//This allocates in memory the space for the pointers to each row of the board
 	struct slot ** board = malloc(boardSize * sizeof(struct slot *));
-
 
 	for(int i = 0; i < boardSize; i++){
 		//This allocates in memory the space for the slots in each row of the board
@@ -70,7 +70,6 @@ void createBoard(int boardSize, struct slot **upLeft, struct slot **upRight, str
 		board[i][boardSize -1].right = NULL;
 	}
 
-
 	//It sets up the adjacent slots for the slot at position (0,0).
 	//This only has only 2 adjacent slots: right and down
 	board[0][0].right = &board[0][1];
@@ -91,8 +90,6 @@ void createBoard(int boardSize, struct slot **upLeft, struct slot **upRight, str
 	board[boardSize - 1][boardSize-1].up = &board[boardSize-2][boardSize-1];
 	board[boardSize - 1][boardSize -1].left = &board[boardSize -1][boardSize -2];
 
-
-
 	//assigns a pointer to slot at position (0, 0)
 	*upLeft = &board[0][0];
 	//assigns pointer of pointer to slot at position (0, boardSize -1)
@@ -103,38 +100,37 @@ void createBoard(int boardSize, struct slot **upLeft, struct slot **upRight, str
 	*downRight = &board[boardSize -1][boardSize -1];
 }
 
-void slotInitialize(struct slot **upLeft)
+void slotInitialize(struct slot **currSlot)
 {
-	struct slot *currSlot = *upLeft; // pointer to the current slot
-	struct slot *nextRowSlot = NULL; // pointer to the first slot pointer on the next row
+	struct slot **nextRowSlot = NULL; // pointer to the first slot pointer on the next row
 
 	for (size_t i = 0; i < BOARD_SIZE; i++) // looping through slot rows
 	{
-		nextRowSlot = (currSlot->right); // assigning the slot pointer down from currSlot to newRowSlot
+		nextRowSlot = &((*currSlot)->down); // assigning the slot pointer down from currSlot to newRowSlot
 
 		for (size_t j = 0; j < BOARD_SIZE; j++) // looping through slot columns
 		{
-			currSlot->type = rand()%3; // assigning the slot a type
-			currSlot = currSlot->right; // assign the next slot to currSlot
+			(*currSlot)->type = rand()%3; // assigning the slot a type
+			currSlot = &(*currSlot)->right; // assign the next slot to currSlot
 		}
 
 		currSlot = nextRowSlot; // assign nextRowSlot to currSlot
 	}
 }
 
-void printBoard(struct slot **upLeft){
-	struct slot *currSlot = *upLeft; // pointer to the current slot
-	struct slot *nextRowSlot = NULL; // pointer to the first slot pointer on the next row
+void printBoard(struct slot **currSlot) {
+	struct slot **nextRowSlot = NULL; // pointer to the first slot pointer on the next row
 
 	for (size_t i = 0; i < BOARD_SIZE; i++) // looping through slot rows
 	{
-		nextRowSlot = (currSlot->right); // assigning the slot pointer down from currSlot to newRowSlot
+		nextRowSlot = &((*currSlot)->down); // assigning the slot pointer down from currSlot to newRowSlot
 
 		for (size_t j = 0; j < BOARD_SIZE; j++) // looping through slot columns
 		{
-			printf("(%d,%d)\t", currSlot->column, currSlot->row);
-			currSlot = currSlot->right; // assign the next slot to currSlot
+			printf("(%d,%d) %d\t", (*currSlot)->column, (*currSlot)->row, (*currSlot)->type);
+			currSlot = &(*currSlot)->right; // assign the next slot to currSlot
 		}
+		printf("\n");
 
 		currSlot = nextRowSlot; // assign nextRowSlot to currSlot
 	}
