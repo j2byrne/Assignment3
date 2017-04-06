@@ -1,50 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#include "operations.h" // operations header
+#include "operations.h"
 
-int main(void)
-{
-	struct players player[6]; // struct players called player
-	struct slots slot[20]; // struct slots called slot
+int main(void) {
+	//pointer to slot (0,0)
+	struct slot *upLeft;
 
-	srand(time(NULL)); // seed the rand function
+	//pointer to slot (0,boardSize -1)
+	struct slot *upRight;
 
-	printf("Welcome to Crossfire\n"); // welcoming message
+	//pointer to slot (boardSize - 1, 0)
+	struct slot *downLeft;
 
-	// ask user for the number of players and verify that it is between 1 and 6
+	//pointer to slot (boardSize - 1, boardSize -1)
+	struct slot *downRight;
 
-	do
-	{
-		printf("Please enter the number of players (max = 6): "); // prompt
-		scanf(" %d", &playerNumber); // read the number of players from the user
-		getchar(); // read newline character from buffer (for fgets in playerInitialize)
-	} while (playerNumber > 6 || playerNumber < 1); // validate that it is between 1 and 6
+	//Creates the board
+	createBoard(BOARD_SIZE, &upLeft, &upRight, &downLeft, &downRight);
 
-	puts(""); // new line
-
-	playerInitialize(player);
-
-	// ask user for the number of slots and verify that it is between 1 and 20
-	do
-	{
-		printf("Please enter the number of slots (from %d to 20): ", playerNumber); // prompt
-		scanf("%d", &slotNumber); // read the number of slots from the user
-	} while (slotNumber > 20 || slotNumber < playerNumber); // validate that it is between 1 and 20
-
-	puts(""); // newline
-
-	slotInitialize(slot); // call function to setup slot types
-
-	playerPositionStart(slot, player); // call function to position each player in a slot
-
-	// loop through each player
-	for (int currentPlayer = 0; currentPlayer < playerNumber; currentPlayer++)
-	{
-		playerTurn(slot, player, currentPlayer); // call playerTurn function
-
-		printPlayers(player); // print the player name, type and lifePoints
-	}
-
-	return 0;
+	// randomly assigns each slot a random type
+	slotInitialize(&upLeft);
 }
