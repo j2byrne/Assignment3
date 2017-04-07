@@ -35,6 +35,21 @@ struct slot{
 	int player; // integer variable to indicate which player is in the slot if there is a player in the slot
 };
 
+struct players
+{
+	char name[20]; // user name
+	enum playerTypes type; // enum playerTypes called playerType
+
+	int lifePoints; // lifepoints the player has
+
+	// player capabilities
+	int smartness;
+	int strength;
+	int magicSkills;
+	int luck;
+	int dexterity;
+};
+
 // Function Prototypes
 
 /*
@@ -50,3 +65,5 @@ struct slot{
 void createBoard(int board_size, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
 void slotInitialize(struct slot **currSlot);
 void printBoard(struct slot **currSlot);
+void playerInitialize(struct players *playerPtr, int *playerNumber);
+void printPlayers(struct players *playerPtr, int *playerNumber);
