@@ -136,7 +136,7 @@ void printBoard(struct slot **currSlot) {
 	}
 }
 
-void playerInitialize(struct players *playerPtr, int *playerNumber)
+void playerInitialize(struct players **playerPtr, int *playerNumber)
 {
 	do
 	{
@@ -145,72 +145,69 @@ void playerInitialize(struct players *playerPtr, int *playerNumber)
 		getchar(); // read newline character from buffer (for fgets in playerInitialize)
 	} while (*playerNumber > 6 || *playerNumber < 2); // validate that it is between 1 and 6
 
-	playerPtr = (struct players *)calloc(*playerNumber, sizeof(struct players));
+	*playerPtr = (struct players *)calloc(*playerNumber, sizeof(struct players));
 
 	for (int currentPlayer = 0; currentPlayer < *playerNumber; currentPlayer++)
 	{
 		printf("Please input player %ds name: ", currentPlayer+1); // prompt
-		scanf("%19[^\n]s", playerPtr[currentPlayer].name);
+		scanf("%19[^\n]s", (*playerPtr + currentPlayer)->name);
+
 		// check if player type input from user is valid and if not request to give another input that is valid
 		do
 		{
 			printf("Please input the player type, 0 for Elf, 1 for Human, 2 for Ogre and 3 for Wizard: ");
-			scanf("%d", &(playerPtr[currentPlayer].type)); // read player type from user and assign data to player structure
-			getchar(); // read newline character from buffer for fgets
-		} while (playerPtr[currentPlayer].type > 3);
+			scanf("%d", &(*playerPtr +currentPlayer)->type); // read player type from user and assign data to player structure
+			fflush(stdin); // flush buffer
+		} while ((*playerPtr +currentPlayer)->type > 3);
 
-		puts(""); // newline
-
-		playerPtr[currentPlayer].lifePoints = 100; // set lifePoints to 100
+		(*playerPtr +currentPlayer)->lifePoints = 100; // set lifePoints to 100
 
 		// calling function depending on the player type
-		switch (playerPtr[currentPlayer].type)
+		switch ((*playerPtr +currentPlayer)->type)
 		{
 			case ELF: // if player is an elf
-				playerPtr[currentPlayer].luck = 60 + rand()%41; // set player luck to between 60 and 100
-				playerPtr[currentPlayer].smartness = 70 + rand()%31; // set player smartness to between 70 and 100
-				playerPtr[currentPlayer].strength = 1 + rand()%50; // set player luck to between 1 and 50
-				playerPtr[currentPlayer].magicSkills = 51 + rand()%29; // set player luck to between 51 and 80
-				playerPtr[currentPlayer].dexterity = 1 + rand()%100; // set player luck to between 1 and 100
+				(*playerPtr +currentPlayer)->luck = 60 + rand()%41; // set player luck to between 60 and 100
+				(*playerPtr +currentPlayer)->smartness = 70 + rand()%31; // set player smartness to between 70 and 100
+				(*playerPtr +currentPlayer)->strength = 1 + rand()%50; // set player luck to between 1 and 50
+				(*playerPtr +currentPlayer)->magicSkills = 51 + rand()%29; // set player luck to between 51 and 80
+				(*playerPtr +currentPlayer)->dexterity = 1 + rand()%100; // set player luck to between 1 and 100
 				break;
 			case HUMAN: // if player is an human
 				do {
-					playerPtr[currentPlayer].magicSkills=1+rand()%100; // set player luck to between 60 and 100
-					playerPtr[currentPlayer].smartness = 1+rand()%100; // set player luck to between 60 and 100
-					playerPtr[currentPlayer].strength = 1+rand()%100; // set player luck to between 60 and 100
-					playerPtr[currentPlayer].luck= 1+rand()%100; // set player luck to between 60 and 100
-					playerPtr[currentPlayer].dexterity= 1+rand()%100; // set player luck to between 60 and 100
-				} while((playerPtr[currentPlayer].magicSkills + playerPtr[currentPlayer].smartness + playerPtr[currentPlayer].strength + playerPtr[currentPlayer].luck + playerPtr[currentPlayer].dexterity) >= 300);
+					(*playerPtr +currentPlayer)->magicSkills=1+rand()%100; // set player luck to between 60 and 100
+					(*playerPtr +currentPlayer)->smartness = 1+rand()%100; // set player luck to between 60 and 100
+					(*playerPtr +currentPlayer)->strength = 1+rand()%100; // set player luck to between 60 and 100
+					(*playerPtr +currentPlayer)->luck= 1+rand()%100; // set player luck to between 60 and 100
+					(*playerPtr +currentPlayer)->dexterity= 1+rand()%100; // set player luck to between 60 and 100
+				} while(((*playerPtr +currentPlayer)->magicSkills + (*playerPtr +currentPlayer)->smartness + (*playerPtr +currentPlayer)->strength + (*playerPtr +currentPlayer)->luck + (*playerPtr +currentPlayer)->dexterity) >= 300);
 				break;
 			case OGRE: // if player is an ogre
 				do{
-					playerPtr[currentPlayer].smartness  = rand()%21; // set player luck to between 60 and 100
-					playerPtr[currentPlayer].luck = rand()%51; // set player luck to between 60 and 100
-				} while((playerPtr[currentPlayer].smartness + playerPtr[currentPlayer].luck) > 50);
+					(*playerPtr +currentPlayer)->smartness  = rand()%21; // set player luck to between 60 and 100
+					(*playerPtr +currentPlayer)->luck = rand()%51; // set player luck to between 60 and 100
+				} while(((*playerPtr +currentPlayer)->smartness + (*playerPtr +currentPlayer)->luck) > 50);
 
-				playerPtr[currentPlayer].magicSkills = 0; // set player luck to between 60 and 100
-				playerPtr[currentPlayer].strength = 80 + rand()%21; // set player luck to between 60 and 100
-				playerPtr[currentPlayer].dexterity = 80 + rand()%21; // set player luck to between 60 and 100
+				(*playerPtr +currentPlayer)->magicSkills = 0; // set player luck to between 60 and 100
+				(*playerPtr +currentPlayer)->strength = 80 + rand()%21; // set player luck to between 60 and 100
+				(*playerPtr +currentPlayer)->dexterity = 80 + rand()%21; // set player luck to between 60 and 100
 				break;
 			case WIZARD: // if player is an wizard
-			    playerPtr[currentPlayer].magicSkills = 80 + rand()%21; // set player luck to between 60 and 100
-				playerPtr[currentPlayer].smartness = 90 + rand()%11; // set player luck to between 60 and 100
-				playerPtr[currentPlayer].strength = 1 + rand()%21; // set player luck to between 60 and 100
-				playerPtr[currentPlayer].dexterity= 1 + rand()%100; // set player luck to between 60 and 100
-			    playerPtr[currentPlayer].luck = 50+ rand()%51; // set player luck to between 60 and 100
+			    (*playerPtr +currentPlayer)->magicSkills = 80 + rand()%21; // set player luck to between 60 and 100
+				(*playerPtr +currentPlayer)->smartness = 90 + rand()%11; // set player luck to between 60 and 100
+				(*playerPtr +currentPlayer)->strength = 1 + rand()%21; // set player luck to between 60 and 100
+				(*playerPtr +currentPlayer)->dexterity= 1 + rand()%100; // set player luck to between 60 and 100
+			    (*playerPtr +currentPlayer)->luck = 50+ rand()%51; // set player luck to between 60 and 100
 				break;
 			default:
 				break;
 		}
-		printf("End");
 	}
-	printf("NED");
 }
 
-void printPlayers(struct players *playerPtr, int *playerNumber) {
-	printf("%20s %10s %4s %9s %8s %11s %4s %9s", "name", "LifePoints", "Type", "Smartness", "Strength", "magicSkills", "Luck", "Dexterity");
+void printPlayers(struct players **playerPtr, int *playerNumber) {
+	printf("%20s %10s %4s %9s %8s %11s %4s %9s\n", "name", "LifePoints", "Type", "Smartness", "Strength", "magicSkills", "Luck", "Dexterity");
 	for (int currentPlayer = 0; currentPlayer < *playerNumber; currentPlayer++)
 	{
-		printf("%20s %10d %4d %9d %8d %11d %4d %9d", playerPtr->name, playerPtr->lifePoints, playerPtr->type, playerPtr->smartness, playerPtr->strength, playerPtr->magicSkills, playerPtr->luck, playerPtr->dexterity);
+		printf("%20s %10d %4d %9d %8d %11d %4d %9d\n", (*playerPtr)->name, (*playerPtr)->lifePoints, (*playerPtr)->type, (*playerPtr)->smartness, (*playerPtr)->strength, (*playerPtr)->magicSkills, (*playerPtr)->luck, (*playerPtr)->dexterity);
 	}
 }

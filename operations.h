@@ -65,5 +65,5 @@ struct players
 void createBoard(int board_size, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
 void slotInitialize(struct slot **currSlot);
 void printBoard(struct slot **currSlot);
-void playerInitialize(struct players *playerPtr, int *playerNumber);
-void printPlayers(struct players *playerPtr, int *playerNumber);
+void playerInitialize(struct players **playerPtr, int *playerNumber);
+void printPlayers(struct players **playerPtr, int *playerNumber);

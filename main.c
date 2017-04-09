@@ -24,9 +24,7 @@ int main(void) {
 
 	printBoard(&upLeft); // print board
 
-	playerInitialize(playerPtr, &playerNumber);
+	playerInitialize(&playerPtr, &playerNumber);
 
-	printf("WORKING");
-
-	printPlayers(playerPtr, &playerNumber);
+	printPlayers(&playerPtr, &playerNumber);
 }
