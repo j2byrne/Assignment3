@@ -1,0 +1,41 @@
+void playerMove(struct slots slot[], struct players player[], int currentPlayer, int previousSlot, int nextSlot) // function to complete a players move
+
+   
+  int r = player[i].row;
+  int c = player[i].column;
+  int x;
+  printf("0 to move up \n1 to move down \n.2 to move left \n3 to move right\n4 to attack");
+  scanf("%d",&x);
+    
+        if(x==0)
+        {
+          player[i].row = r+1; // move player to up slot.
+		  capabilities(); // change stats based on new slot type 
+		  
+		}
+     .
+         else if(x==1)
+         {
+           player[i].row = r-1; // move player to down slot
+	       capabilities(); 
+		 }
+
+        else if(x==2)
+        {
+           player[i].column = c-1; // move player to left slot.
+		   capabilities(); 
+		}
+           
+		 else if(x==3)
+        {
+           player[i].column = c+1; // move player to right slot.
+		   capabilities(); 
+		}
+
+         else if(x==4)
+        {
+            attackfunction();
+		}
+    
+    return 0;
+}
