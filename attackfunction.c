@@ -14,7 +14,7 @@ scanf("%d",&attackType);
 
 printf("\nEnter the name of the player you wish to attack out of the following list"); 
 
-for (i= 1; i < playerNumber; i++)
+for (i= 0; i < playerNumber; i++)
 {
 printf("Do you want to attack player %d\n",i);
 }
@@ -29,8 +29,10 @@ d = player[defenderName].column;
 
 z=abs(c-a);
 z=z+abs(d-b);
+if(defenderName != currPlayer)
+{
 
-if (attackType == 0 && z <=1 ) {                   // only performed on player on the same slot or 1 away.
+ if (attackType == 0 && z <=1 ) {                   // only performed on player on the same slot or 1 away.
 	printf("You have choosen near attack"); 
 	
 	
@@ -70,10 +72,15 @@ if(attackType == 1 && 1 < z < 5) // only performed against players who are a dis
 if(attackType == 2 && player[currPlayer].smartness + player[currPlayer].magicSkills >150){
 	      printf("You have choosen magic attack");
           player[defenderName].lifePoints -= ((0.5* player[currPlayer].magicSkills) + (0.2 * player[currPlayer].smartness)); 
-}
+  }
 	
 	else if (attackType == 2 && player[currPlayer].smartness + player[currPlayer].magicSkills <=150){
 		printf("You do not meet the requirements to perform a magic attack");
 	}
+ }
+ else if (defenderName == currPlayer){
+	 printf("You can't attack yourself");
+ }
+
 	
 }
