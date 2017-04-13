@@ -7,9 +7,10 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#define NULL 0
 #include "operations.h"
 
-void playerMove(int currPlayer, struct slot **currSlot, int row, int column) {
+void playerMove(int currPlayer, struct slot *currSlot, int row, int column) {
 	enum movePositions position;
 	struct slot * newSlot;
 	bool slotEdge[4]; // bool to see whick slots the player can move to in the oder of up, right, down, left
@@ -19,16 +20,16 @@ void playerMove(int currPlayer, struct slot **currSlot, int row, int column) {
 	{
 		slotEdge[i] = true;
 	}
-	if ((*currSlot)->up == NULL) {
+	if (currSlot->up == NULL) {
 		slotEdge[0] = false;
 	}
-	if ((*currSlot)->right == NULL) {
+	if (currSlot->right == NULL) {
 		slotEdge[1] = false;
 	}
-	if ((*currSlot)->down == NULL) {
+	if (currSlot->down == NULL) {
 		slotEdge[2] = false;
 	}
-	if ((*currSlot)->left == NULL) {
+	if (currSlot->left == NULL) {
 		slotEdge[3] = false;
 	}
 
@@ -50,22 +51,22 @@ void playerMove(int currPlayer, struct slot **currSlot, int row, int column) {
 	switch(position)
 	{
 		case 0:
-			newSlot = (*currSlot)->up;
+			newSlot = currSlot->up;
 			break;
 		case 1:
-			newSlot = (*currSlot)->right;
+			newSlot = currSlot->right;
 			break;
 		case 2:
-			newSlot = (*currSlot)->down;
+			newSlot = currSlot->down;
 			break;
 		case 3:
-			newSlot = (*currSlot)->left;
+			newSlot = currSlot->left;
 			break;
 		default:
 			break;
 	}
 
-	(*currSlot)->playersInSlot[currPlayer] = false;
+	currSlot->playersInSlot[currPlayer] = false;
 	newSlot->playersInSlot[currPlayer] = true;
 
 	player[currPlayer].row = row;
@@ -73,7 +74,7 @@ void playerMove(int currPlayer, struct slot **currSlot, int row, int column) {
 }
 
 struct slot * findSlot(int row, int column, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight) {
-	struct slot * currSlot;
+	struct slot * currSlot = malloc(sizeof(struct slot));
 
 	// player[currPlayer].row = 5;
 

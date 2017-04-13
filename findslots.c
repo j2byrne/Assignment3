@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "operations.h"
+
 void findSlots(int reqDist, int currDist,  struct slot * currSlot, struct slot * foundSlots, int * count,  bool explored[BOARD_SIZE][BOARD_SIZE]){
 
 

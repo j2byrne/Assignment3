@@ -6,7 +6,7 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
+#define NULL 0
 #include <time.h>
 #include "operations.h"
 
@@ -61,7 +61,7 @@ int main(void) {
 				row = player[currPlayer].row;
 				column = player[currPlayer].column;
 				currSlot = findSlot(row, column, &upLeft, &upRight, &downLeft, &downRight);
-				playerMove(currPlayer, &currSlot, row, column); // call playerMove function
+				playerMove(currPlayer, currSlot, row, column); // call playerMove function
 				break;
 			case QUIT: // case for when player wants to quit the game
 				//playerQuit();

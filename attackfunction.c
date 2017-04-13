@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "crossfireOperations.h"
+#include "operations.h"
 
 void attack(struct players player[], int currentPlayer)
 {
