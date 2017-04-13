@@ -55,7 +55,7 @@ int main(void) {
 		switch (playerAction)
 		{
 			case ATTACK: // case for when player wants to attack
-				//playerAttack(currPlayer, &upLeft, &upRight, &downLeft, &downRight);
+				attack(currPlayer, playerNumber);
 				break;
 			case MOVE: // case for when player wants to move position
 				row = player[currPlayer].row;
