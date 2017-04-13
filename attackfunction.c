@@ -64,7 +64,7 @@ if(attackType == 1 && 1 < z > 5) // only performed against players who are a dis
 				 player[defenderName].lifePoints = player[defenderName].lifePoints;
              }
          }
-		 else if (attackType=1 && z>=1 || z<=5)
+		 else if (attackType ==1 && z>=1 || z<=5)
 			 printf("The player must be 2-4 slots away in order to perform a distant attack");
 
 if(attackType == 2 && player[currPlayer].smartness + player[currPlayer].magicSkills >150){
