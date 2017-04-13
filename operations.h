@@ -83,6 +83,7 @@ void playerPositionStart(int currPlayer, int row, int column, struct slot **upLe
 
 void playerAttack(int currPlayer, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
 void playerMove(int currPlayer, struct slot *currSlot, int row, int column);
+void attack( int currPlayer,int playerNumber);
 struct slot * findSlot(int row, int column, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
 
 
