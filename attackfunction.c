@@ -16,31 +16,31 @@ printf("\nEnter the name of the player you wish to attack out of the following l
 
 for (i= 0; i < playerNumber; i++)
 {
-printf("Do you want to attack player %d\n",i);
+printf("Do you want to attack player %d\n",i); // asks the user which player they want to attack
 }
 
 scanf("%d",&defenderName);
 
-a = player[currPlayer].row;  
+a = player[currPlayer].row;  // takes the row and column of the player attacking
 b = player[currPlayer].column;
 
-c = player[defenderName].row;
+c = player[defenderName].row; // takes the row and column of player defending
 d = player[defenderName].column;
 
 z=abs(c-a);
-z=z+abs(d-b);
-if(defenderName != currPlayer)
+z=z+abs(d-b);   // gets the distance between the two
+if(defenderName != currPlayer)  // can't attack yourself
 {
 
  if (attackType == 0 && z <=1 ) {                   // only performed on player on the same slot or 1 away.
 	printf("You have choosen near attack"); 
 	
 	
-	       if(player[defenderName].strength <= 70)   // if the attacker strength points is less than or equal to 70
+	       if(player[defenderName].strength <= 70)   // if the defender strength points is less than or equal to 70
 		   {			   
 		       player[defenderName].lifePoints -= 0.5 * player[currPlayer].strength; // reduce defender lifePoints
 	          }
-	             else if(player[defenderName].strength > 70)  // if the attacker points is greater than 70
+	             else if(player[defenderName].strength > 70)  // if the defender points is greater than 70
 				 {
 		           player[defenderName].lifePoints -= 0.3 * player[currPlayer].strength; // reduce defender lifePoints
                  }
@@ -57,11 +57,11 @@ if(attackType == 1 && 1 < z < 5) // only performed against players who are a dis
         {  
 	    printf("You have choosen distant attack");
 	
-           if(player[currPlayer].dexterity > player[defenderName].dexterity) // if the playerAttacked dexterity is greater than the attacking player
+           if(player[currPlayer].dexterity > player[defenderName].dexterity) // if the attacker dexterity is greater than the defending player
 		   {
-		      player[defenderName].lifePoints -= 0.3 * player[currPlayer].strength; // reduce attacker lifePoints
+		      player[defenderName].lifePoints -= 0.3 * player[currPlayer].strength; // reduce defender lifePoints
 		   }
-	         else if (player[currPlayer].dexterity <= player[defenderName].dexterity) // if the attacker points is greater than 70
+	         else if (player[currPlayer].dexterity <= player[defenderName].dexterity) // if the defender dex is better than the attackers do nothing
 			 {
 				 player[defenderName].lifePoints = player[defenderName].lifePoints;
              }
