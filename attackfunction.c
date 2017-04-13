@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "crossfireOperations.h"
+#include "operations.h"
 
 void attack( int currPlayer,int playerNumber)
 {
  int attackType;
  int defenderName;
- int z;
+ int z,a,b,c,d,i;
 
 printf("You have decided to attack"); // The current player has choosen to attack this round 
 printf("0 for near attack \n1 for distant attack \n2 for magic attack"); // player decides which attack to use 
@@ -21,11 +21,11 @@ printf("Do you want to attack player %d",i);
 
 scanf("%d",&defenderName);
 
-a = players[currPlayer].row;
-b = players[currPlayer].column;
+a = player[currPlayer].row;
+b = player[currPlayer].column;
 
-c = players[defenderName].row;
-d = players[defenderNamee].column;
+c = player[defenderName].row;
+d = player[defenderName].column;
 
 z=abs(a-b);
 z=z+abs(c-d);
@@ -55,24 +55,24 @@ if(attackType == 1 && 1 < z > 5) // only performed against players who are a dis
         {  
 	    printf("You have choosen distant attack");
 	
-           if(player[currPlayer].dexterity > player[defenderName]) // if the playerAttacked dexterity is greater than the attacking player
+           if(player[currPlayer].dexterity > player[defenderName].dexterity) // if the playerAttacked dexterity is greater than the attacking player
 		   {
 		      player[defenderName].lifePoints -= 0.3 * player[currPlayer].strength; // reduce attacker lifePoints
 		   }
-	         else if {
-				     (player[currPlayer].dexterity <= player[defenderName]) // if the attacker points is greater than 70
-		             player[defenderName].lifePoints = player[defenderName].lifepoints
-                     }
+	         else if (player[currPlayer].dexterity <= player[defenderName].dexterity) // if the attacker points is greater than 70
+			 {
+				 player[defenderName].lifePoints = player[defenderName].lifePoints;
+             }
          }
-		 else if (k=1 && z>=1 || z<=5)
-			 printf("The player must be 2-4 slots away in order to perform a distant attack")
+		 else if (attackType=1 && z>=1 || z<=5)
+			 printf("The player must be 2-4 slots away in order to perform a distant attack");
 
-if(attackType == 2 && player[currPlayer].smartness + player[currPlayer].magicskills >150){
+if(attackType == 2 && player[currPlayer].smartness + player[currPlayer].magicSkills >150){
 	      printf("You have choosen magic attack");
-          player[defenderName].lifepoints -= ((0.5* player[currPlayer].magicskills) + (0.2 * player[currPlayer].smartness)); 
+          player[defenderName].lifePoints -= ((0.5* player[currPlayer].magicSkills) + (0.2 * player[currPlayer].smartness)); 
 }
 	
-	else if (attackType == 2 && player[currPlayer].smartness + player[currPlayer].magicskills <=150){
+	else if (attackType == 2 && player[currPlayer].smartness + player[currPlayer].magicSkills <=150){
 		printf("You do not meet the requirements to perform a magic attack");
 	}
 	
