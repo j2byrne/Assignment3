@@ -8,15 +8,15 @@ void attack( int currPlayer,int playerNumber)
  int defenderName;
  int z,a,b,c,d,i;
 
-printf("You have decided to attack"); // The current player has choosen to attack this round 
+printf("You have decided to attack\n"); // The current player has choosen to attack this round 
 printf("0 for near attack \n1 for distant attack \n2 for magic attack"); // player decides which attack to use 
 scanf("%d",&attackType);
 
-printf("Enter the name of the player you wish to attack out of the following list"); 
+printf("\nEnter the name of the player you wish to attack out of the following list"); 
 
 for (i= 0; i < playerNumber; i++)
 {
-printf("Do you want to attack player %d",i);
+printf("Do you want to attack player %d\n",i);
 }
 
 scanf("%d",&defenderName);
