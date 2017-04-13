@@ -13,6 +13,8 @@
 
 // Definition of boolean types gave errors on eclispe, hence using stdbool.h
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 enum playerTypes {ELF, HUMAN, OGRE, WIZARD}; // enumeration for the type of player
 enum slotTypes {CITY, HILL, LEVEL_GROUND}; // enumeration for the type of slot

@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#define NULL 0
+#include <stdlib.h>
 #include "operations.h"
 
 void playerMove(int currPlayer, struct slot *currSlot, int row, int column) {
