@@ -8,8 +8,7 @@
 #ifndef OPERATIONS_H_
 #define OPERATIONS_H_
 
-#define BOARD_SIZE 4
-#define REQ_DISTANCE 3
+#define BOARD_SIZE 7
 
 // Definition of boolean types gave errors on eclispe, hence using stdbool.h
 #include <stdbool.h>
@@ -61,6 +60,7 @@ struct players
 };
 
 struct players player[6];
+int playersInGame;
 
 // Function Prototypes
 
@@ -83,8 +83,9 @@ void playerPositionStart(int currPlayer, int row, int column, struct slot **upLe
 
 void playerAttack(int currPlayer, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
 void playerMove(int currPlayer, struct slot *currSlot, int row, int column);
-void attack( int currPlayer,int playerNumber);
+void attack( int currPlayer,int playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
 struct slot * findSlot(int row, int column, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
+void playerQuit(int currPlayer, int *playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
 
 
 #endif /* OPERATIONS_H_ */

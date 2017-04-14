@@ -138,3 +138,17 @@ struct slot * findSlot(int row, int column, struct slot **upLeft, struct slot **
 
 	return currSlot;
 }
+
+void playerQuit(int currPlayer, int *playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight) {
+	struct slot * playerSlot;
+	int row = player[currPlayer].row;
+	int column = player[currPlayer].column;
+
+	playerSlot = findSlot(row, column, upLeft, upRight, downLeft, downRight);
+
+	playerSlot->playersInSlot[currPlayer] = false;
+
+	player[currPlayer].lifePoints = 0;
+
+	playersInGame--;
+}

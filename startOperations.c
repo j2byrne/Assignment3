@@ -156,13 +156,14 @@ void printBoard(struct slot **currSlot, int playerNumber) {
 void playerInitialize(int *playerNumber)
 {
 	printf("Please enter the number of players (2-6): ");
-	scanf("%d", &(*playerNumber));
+	scanf(" %d", &(*playerNumber));
+	fflush(stdin);
 
 	for (int currentPlayer = 0; currentPlayer < *playerNumber; currentPlayer++)
 	{
 		printf("Please input player %ds name: ", currentPlayer+1); // prompt
-		getchar();
-		scanf("%19[^\n]s", player[currentPlayer].name);
+		scanf(" %19[^\n]s", player[currentPlayer].name);
+		fflush(stdin);
 
 		// check if player type input from user is valid and if not request to give another input that is valid
 		do
