@@ -132,22 +132,34 @@ void slotInitialize(struct slot **currSlot)
 void printBoard(struct slot **currSlot, int playerNumber) {
 	struct slot **nextRowSlot = NULL; // pointer to the first slot pointer on the next row
 
+	char *slotType[3] = {" C  "," H  ", " LG "}; // array of slot type names
+
+	printf("|"); // print newline
+	for (size_t i = 0; i < BOARD_SIZE; i++) // print newline
+	{
+			printf("----|"); // print border
+	}
+	printf("\n"); // print newline
+
 	for (size_t i = 0; i < BOARD_SIZE; i++) // looping through slot rows
 	{
 		nextRowSlot = &((*currSlot)->down); // assigning the slot pointer down from currSlot to newRowSlot
 
+		printf("|"); // print border
+
 		for (size_t j = 0; j < BOARD_SIZE; j++) // looping through slot columns
 		{
-			printf("(%d,%d) ", (*currSlot)->column, (*currSlot)->row);
-			for (int i = 0; i < playerNumber; i++)
-			{
-				printf("%d ", (*currSlot)->playersInSlot[i]);
-			}
-			printf("\t");
+			printf("%s|", slotType[(*currSlot)->type]); // print slot type
 
 			currSlot = &(*currSlot)->right; // assign the next slot to currSlot
 		}
-		printf("\n");
+		printf("\n"); // print newline
+		printf("|"); // print border
+		for (size_t i = 0; i < BOARD_SIZE; i++) // print border per slot
+		{
+				printf("----|"); // print border
+		}
+		printf("\n"); // print newline
 
 		currSlot = nextRowSlot; // assign nextRowSlot to currSlot
 	}
@@ -159,11 +171,11 @@ void playerInitialize(int *playerNumber)
 	scanf(" %d", &(*playerNumber));
 	fflush(stdin);
 
-	for (int currentPlayer = 0; currentPlayer < *playerNumber; currentPlayer++)
+	for (int currentPlayer = 0; currentPlayer < *playerNumber; currentPlayer++) // loop through players
 	{
 		printf("Please input player %ds name: ", currentPlayer+1); // prompt
-		scanf(" %19[^\n]s", player[currentPlayer].name);
-		fflush(stdin);
+		scanf(" %19[^\n]s", player[currentPlayer].name); // read player name
+		fflush(stdin); // flush the standard input
 
 		// check if player type input from user is valid and if not request to give another input that is valid
 		do
@@ -171,7 +183,7 @@ void playerInitialize(int *playerNumber)
 			printf("Please input the player type, 0 for Elf, 1 for Human, 2 for Ogre and 3 for Wizard: ");
 			scanf("%d", &player[currentPlayer].type); // read player type from user and assign data to player structure
 			getchar(); // read newline character from buffer for fgets
-		} while (player[currentPlayer].type > 3);
+		} while (player[currentPlayer].type > 3); // check to see if input is valid
 
 		puts(""); // newline
 
@@ -219,77 +231,11 @@ void playerInitialize(int *playerNumber)
 	}
 }
 
-void playerPositionStart(int currPlayer, int row, int column, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight) {
-	struct slot * currSlot;
-
-	if (row >= BOARD_SIZE/2)
-	{
-		if (column >= BOARD_SIZE/2)
-		{
-			currSlot = *downRight;
-		}
-		else
-		{
-			currSlot = *upRight;
-		}
-	}
-	else
-	{
-		if (column >= BOARD_SIZE/2)
-		{
-			currSlot = *downLeft;
-		}
-		else
-		{
-			currSlot = *upLeft;
-		}
-	}
-
-	bool found = false; // if the slot hasn't been found
-
-	//while the slot is not found
-	while(found == false) {
-
-		//if the row of the current slot is > of the row of the desired slot, we move up
-		if(currSlot->row > row) {
-
-			//the current slot now points to the slot one row up
-			currSlot = currSlot->up;
-		}
-		//if the row of the current slot is < of the row of the desired slot, we move down
-		if(currSlot->row < row) {
-
-			//the current slot now points to the slot one row down
-			currSlot = currSlot->down;
-		}
-		//if the column of the current slot is > of the column of the desired slot, we move left
-		if(currSlot->column > column) {
-
-			//the current slot now points to the slot one column left
-			currSlot = currSlot->left;
-		}
-		//if the column of the current slot is < of the column of the desired slot, we move right
-		if(currSlot->column < column) {
-
-			//the current slot now points to the slot one column right
-			currSlot = currSlot->right;
-		}
-		//if the current slot is at a column and a row equal to the desired column and row, respectively we found the slot
-		if(currSlot->column == column && currSlot->row == row) {
-			found = true;
-		}
-	} // end of while loop
-
-	currSlot->playersInSlot[currPlayer] = true;
-	player[currPlayer].row = row;
-	player[currPlayer].column = column;
-}
-
 void printPlayers(int playerNumber) {
-	printf("%20s %10s %4s %9s %8s %11s %4s %9s %3s %6s\n", "name", "LifePoints", "Type", "Smartness", "Strength", "magicSkills", "Luck", "Dexterity", "Row", "Column");
-	for (int currentPlayer = 0; currentPlayer < playerNumber; currentPlayer++)
+	printf("%20s %10s %4s %9s %8s %11s %4s %9s %8s\n", "name", "LifePoints", "Type", "Smartness", "Strength", "magicSkills", "Luck", "Dexterity", "Position"); // print header
+	for (int currentPlayer = 0; currentPlayer < playerNumber; currentPlayer++) // loop through players
 	{
-		printf("%20s %10d %4d %9d %8d %11d %4d %9d %3d %6d\n", player[currentPlayer].name, player[currentPlayer].lifePoints, player[currentPlayer].type, player[currentPlayer].smartness, player[currentPlayer].strength, player[currentPlayer].magicSkills, player[currentPlayer].luck, player[currentPlayer].dexterity, player[currentPlayer].row, player[currentPlayer].column);
+		printf("%20s %10d %4d %9d %8d %11d %4d %9d (%d,%d)\n", player[currentPlayer].name, player[currentPlayer].lifePoints, player[currentPlayer].type, player[currentPlayer].smartness, player[currentPlayer].strength, player[currentPlayer].magicSkills, player[currentPlayer].luck, player[currentPlayer].dexterity, player[currentPlayer].row, player[currentPlayer].column); // printing player information
 	}
 }
 

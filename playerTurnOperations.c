@@ -71,35 +71,68 @@ void playerMove(int currPlayer, struct slot *currSlot, int row, int column) {
 
 	player[currPlayer].row = row;
 	player[currPlayer].column = column;
+
+	switch (newSlot[currPlayer].type)
+	{
+		case CITY: // if player moved to a city
+			if (player[currPlayer].smartness > 60) // if current players smartness is greater than 60
+			{
+				player[currPlayer].magicSkills += 10; // add 10 to players magic skills
+				if (player[currPlayer].magicSkills > 100) // if player magic skills is greater to 100 set magic skills to 100
+					player[currPlayer].magicSkills = 100;
+			}
+			else if (player[currPlayer].smartness <= 50)// if current players smartness is less than or equal to 50
+			{
+				player[currPlayer].dexterity -= 10;// subtract 10 from players dexterity
+				if (player[currPlayer].dexterity < 0)// if player dexterity is less  than 0 set player dexterity to 0
+					player[currPlayer].dexterity = 0;
+			}
+			break;
+		case HILL:
+			if (player[currPlayer].dexterity >= 60) // if current players dexterity is greater than 60
+				{
+					player[currPlayer].strength += 10; // add 10 to players strength
+					if (player[currPlayer].strength > 100) // if player strength is greater to 100 set strength to 100
+						player[currPlayer].strength = 100;
+				}
+				else if (player[currPlayer].dexterity < 50)// if current players dexterity is less than or equal to 50
+				{
+					player[currPlayer].strength -= 10;// subtract 10 from players dexterity
+					if (player[currPlayer].strength < 0)// if player dexterity is less  than 0 set player strength to 0
+						player[currPlayer].strength = 0;
+				}
+			break;
+		// note there are no changes to player capabilities if the slot is a level ground
+		default:
+			break;
+	}
 }
 
 struct slot * findSlot(int row, int column, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight) {
 	struct slot * currSlot = malloc(sizeof(struct slot));
 
-	// player[currPlayer].row = 5;
-
-	if (row >= BOARD_SIZE/2)
-	{
-		if (column >= BOARD_SIZE/2)
+	if (row >= BOARD_SIZE/2) // if on the right side of the board
 		{
-			currSlot = *downRight;
+			if (column >= BOARD_SIZE/2) // if on bottom of the board
+			{
+				currSlot = *downRight; // assign bottom right corner pointer to currSlot
+			}
+			else // if on the top of the board
+			{
+				currSlot = *upRight; // assign top right corner pointer to currSlot
+			}
 		}
-		else
+		else // if on the left side of the board
 		{
-			currSlot = *upRight;
+			if (column >= BOARD_SIZE/2) // if on bottom of the board
+			{
+				currSlot = *downLeft; // assign bottom left corner pointer to currSlot
+			}
+			else // if on the top of the board
+			{
+				currSlot = *upLeft; // assign top right corner pointer to currSlot
+			}
 		}
-	}
-	else
-	{
-		if (column >= BOARD_SIZE/2)
-		{
-			currSlot = *downLeft;
-		}
-		else
-		{
-			currSlot = *upLeft;
-		}
-	}
 
 	bool found = false; // if the slot hasn't been found
 
@@ -136,19 +169,19 @@ struct slot * findSlot(int row, int column, struct slot **upLeft, struct slot **
 		}
 	} // end of while loop
 
-	return currSlot;
+	return currSlot; // return currSlot
 }
 
 void playerQuit(int currPlayer, int *playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight) {
-	struct slot * playerSlot;
-	int row = player[currPlayer].row;
-	int column = player[currPlayer].column;
+	struct slot * playerSlot; // slot of player
+	int row = player[currPlayer].row; // row of player position
+	int column = player[currPlayer].column; // column of player position
 
-	playerSlot = findSlot(row, column, upLeft, upRight, downLeft, downRight);
+	playerSlot = findSlot(row, column, upLeft, upRight, downLeft, downRight); // return pointer to the slot that the player is in
 
-	playerSlot->playersInSlot[currPlayer] = false;
+	playerSlot->playersInSlot[currPlayer] = false; // set that the player isnt in the slot
 
-	player[currPlayer].lifePoints = 0;
+	player[currPlayer].lifePoints = 0; // set players lifePoints to 0
 
-	playersInGame--;
+	playersInGame--; // decrement PlayersInGame
 }

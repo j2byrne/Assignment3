@@ -37,11 +37,18 @@ int main(void) {
 		int row = rand()%BOARD_SIZE;
 		int column = rand()%BOARD_SIZE;
 
-		playerPositionStart(currPlayer, row, column, &upLeft, &upRight, &downLeft, &downRight);
+		struct slot * playerSlot = findSlot(row, column, &upLeft, &upRight, &downLeft, &downRight); // return the slot the player will be assigned to
+
+		playerSlot->playersInSlot[currPlayer] = true; // assign boolean array for player to true to indicate that the player is at that slot
+		player[currPlayer].row = row; // assign row of player to currPlayers struct player
+		player[currPlayer].column = column; // assign column of player to currPlayers struct player
 	}
 
+	puts(""); // print newline
 	printBoard(&upLeft, playerNumber); // print board
+	puts(""); // print newline
 	printPlayers(playerNumber);
+	puts(""); // print newline
 
 	playersInGame = playerNumber;
 
@@ -77,22 +84,23 @@ int main(void) {
 					default:
 						break;
 				}
-				printBoard(&upLeft, playerNumber); // print board
-				printPlayers(playerNumber);
+				puts(""); // print newline
+				printPlayers(playerNumber); // print player info.
+				puts(""); // print newline
 			}
 		}
 	}
 
-	for (int currPlayer = 0; currPlayer < playerNumber; currPlayer++)
+	for (int currPlayer = 0; currPlayer < playerNumber; currPlayer++) // loop through players to find the player that is left, i.e. the winner
 	{
-		if (player[currPlayer].lifePoints != 0)
+		if (player[currPlayer].lifePoints != 0) // if player hasnt lost
 		{
-			winner = currPlayer;
-			break;
+			winner = currPlayer; // currPlayer assigned to winner
+			break; // exit loop as winner has been found
 		}
 	}
 
-	printf("Congratulations, Player %d won the game!\n", winner+1);
+	printf("Congratulations, Player %d won the game!\n", winner+1); // print congratulations message
 }
 
 

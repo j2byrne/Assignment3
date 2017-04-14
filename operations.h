@@ -74,19 +74,16 @@ int playersInGame;
 * 	upLeft: pointer of pointer to slot at position (size - 1, size -1)
 */
 
-void createBoard(int board_size, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
-void slotInitialize(struct slot **currSlot);
-void printBoard(struct slot **currSlot, int playerNumber);
-void playerInitialize(int *playerNumber);
-void printPlayers(int playerNumber);
-void playerPositionStart(int currPlayer, int row, int column, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
+void createBoard(int board_size, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight); // function to create the board
+void slotInitialize(struct slot **currSlot); // function to give each slot a type
+void printBoard(struct slot **currSlot, int playerNumber); // function to print the board
+void playerInitialize(int *playerNumber); // function to assign each player its value
+void printPlayers(int playerNumber); // function to print info. about each player
+void playerPositionStart(int currPlayer, int row, int column, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight); // assign each player a slot
 
-void playerAttack(int currPlayer, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
 void playerMove(int currPlayer, struct slot *currSlot, int row, int column);
-void attack( int currPlayer,int playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
-struct slot * findSlot(int row, int column, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
-void playerQuit(int currPlayer, int *playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
-
+void attack( int currPlayer,int playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight); // function to implement a player moving
+struct slot * findSlot(int row, int column, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight); // function to return a pointer to a slot with a given row and column number
+void playerQuit(int currPlayer, int *playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight); // function to remove player from the game when player looses or player quits
 
 #endif /* OPERATIONS_H_ */
-
