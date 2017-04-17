@@ -81,9 +81,10 @@ void playerInitialize(int *playerNumber); // function to assign each player its 
 void printPlayers(int playerNumber); // function to print info. about each player
 void playerPositionStart(int currPlayer, int row, int column, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight); // assign each player a slot
 
+void playerTurn(int currPlayer, int playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight);
 void playerMove(int currPlayer, struct slot *currSlot, int row, int column);
 void attack( int currPlayer,int playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight); // function to implement a player moving
 struct slot * findSlot(int row, int column, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight); // function to return a pointer to a slot with a given row and column number
-void playerQuit(int currPlayer, int *playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight); // function to remove player from the game when player looses or player quits
+void playerQuit(int currPlayer, int playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight); // function to remove player from the game when player looses or player quits
 
 #endif /* OPERATIONS_H_ */

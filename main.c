@@ -58,35 +58,7 @@ int main(void) {
 		{
 			if (player[currPlayer].lifePoints != 0)
 			{
-				enum playerActions playerAction; // enum playerActions to store what the player is going to do
-				struct slot * currSlot;
-				int row, column;
-
-				printf("Player %d enter 0 if you want to attack or 1 if you want to move or 2 to quit the game: ", currPlayer+1); // prompt
-				scanf("%d", &playerAction); // read integer which is saved in the enumeration playerAction to determine whether the player wants to attack another player or move position
-
-				// switch to determine the players action
-				switch (playerAction)
-				{
-					case ATTACK: // case for when player wants to attack
-						attack(currPlayer, playerNumber, &upLeft, &upRight, &downLeft, &downRight);
-						break;
-					case MOVE: // case for when player wants to move position
-						row = player[currPlayer].row;
-						column = player[currPlayer].column;
-						currSlot = findSlot(row, column, &upLeft, &upRight, &downLeft, &downRight);
-						playerMove(currPlayer, currSlot, row, column); // call playerMove function
-						break;
-					case QUIT: // case for when player wants to quit the game
-						printf("Player %d has quit the game\n", currPlayer+1);
-						playerQuit(currPlayer, &playerNumber, &upLeft, &upRight, &downLeft, &downRight);
-						break;
-					default:
-						break;
-				}
-				puts(""); // print newline
-				printPlayers(playerNumber); // print player info.
-				puts(""); // print newline
+				playerTurn(currPlayer, playerNumber, &upLeft, &upRight, &downLeft, &downRight);
 			}
 		}
 	}

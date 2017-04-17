@@ -232,10 +232,12 @@ void playerInitialize(int *playerNumber)
 }
 
 void printPlayers(int playerNumber) {
-	printf("%20s %10s %4s %9s %8s %11s %4s %9s %8s\n", "name", "LifePoints", "Type", "Smartness", "Strength", "magicSkills", "Luck", "Dexterity", "Position"); // print header
+	char * playerType[] = {"Elf", "Human", "Ogre", "Wizard"};
+
+	printf("%20s %10s %8s %6s %9s %8s %11s %4s %9s\n", "name", "LifePoints", "Position", "Type", "Smartness", "Strength", "magicSkills", "Luck", "Dexterity"); // print header
 	for (int currentPlayer = 0; currentPlayer < playerNumber; currentPlayer++) // loop through players
 	{
-		printf("%20s %10d %4d %9d %8d %11d %4d %9d (%d,%d)\n", player[currentPlayer].name, player[currentPlayer].lifePoints, player[currentPlayer].type, player[currentPlayer].smartness, player[currentPlayer].strength, player[currentPlayer].magicSkills, player[currentPlayer].luck, player[currentPlayer].dexterity, player[currentPlayer].row, player[currentPlayer].column); // printing player information
+		printf("%20s %10d    (%d,%d) %6s %9d %8d %11d %4d %9d\n", player[currentPlayer].name, player[currentPlayer].lifePoints, player[currentPlayer].row, player[currentPlayer].column, playerType[player[currentPlayer].type], player[currentPlayer].smartness, player[currentPlayer].strength, player[currentPlayer].magicSkills, player[currentPlayer].luck, player[currentPlayer].dexterity); // printing player information
 	}
 }
 

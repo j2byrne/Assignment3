@@ -10,6 +10,38 @@
 #include <stdlib.h>
 #include "operations.h"
 
+void playerTurn(int currPlayer, int playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight) {
+	enum playerActions playerAction; // enum playerActions to store what the player is going to do
+	struct slot * currSlot;
+	int row, column;
+
+	printf("Player %d enter 0 if you want to attack or 1 if you want to move or 2 to quit the game: ", currPlayer+1); // prompt
+	scanf("%d", &playerAction); // read integer which is saved in the enumeration playerAction to determine whether the player wants to attack another player or move position
+
+	// switch to determine the players action
+	switch (playerAction)
+	{
+		case ATTACK: // case for when player wants to attack
+			attack(currPlayer, playerNumber, upLeft, upRight, downLeft, downRight);
+			break;
+		case MOVE: // case for when player wants to move position
+			row = player[currPlayer].row;
+			column = player[currPlayer].column;
+			currSlot = findSlot(row, column, upLeft, upRight, downLeft, downRight);
+			playerMove(currPlayer, currSlot, row, column); // call playerMove function
+			break;
+		case QUIT: // case for when player wants to quit the game
+			printf("Player %d has quit the game\n", currPlayer+1);
+			playerQuit(currPlayer, playerNumber, upLeft, upRight, downLeft, downRight);
+			break;
+		default:
+			break;
+	}
+	puts(""); // print newline
+	printPlayers(playerNumber); // print player info.
+	puts(""); // print newline
+}
+
 void playerMove(int currPlayer, struct slot *currSlot, int row, int column) {
 	enum movePositions position;
 	struct slot * newSlot;
@@ -52,15 +84,19 @@ void playerMove(int currPlayer, struct slot *currSlot, int row, int column) {
 	{
 		case 0:
 			newSlot = currSlot->up;
+			row--;
 			break;
 		case 1:
 			newSlot = currSlot->right;
+			column++;
 			break;
 		case 2:
 			newSlot = currSlot->down;
+			row++;
 			break;
 		case 3:
 			newSlot = currSlot->left;
+			column--;
 			break;
 		default:
 			break;
@@ -172,7 +208,7 @@ struct slot * findSlot(int row, int column, struct slot **upLeft, struct slot **
 	return currSlot; // return currSlot
 }
 
-void playerQuit(int currPlayer, int *playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight) {
+void playerQuit(int currPlayer, int playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight) {
 	struct slot * playerSlot; // slot of player
 	int row = player[currPlayer].row; // row of player position
 	int column = player[currPlayer].column; // column of player position
@@ -185,10 +221,6 @@ void playerQuit(int currPlayer, int *playerNumber, struct slot **upLeft, struct 
 
 	playersInGame--; // decrement PlayersInGame
 }
-
-#include <stdio.h>
-#include <stdlib.h>
-#include "operations.h"
 
 void attack(int currPlayer, int playerNumber, struct slot **upLeft, struct slot **upRight, struct slot **downLeft, struct slot **downRight)
 {
@@ -236,7 +268,7 @@ void attack(int currPlayer, int playerNumber, struct slot **upLeft, struct slot 
 			if (player[defenderPlayer].lifePoints < 0)
 			{
 				printf("player %d lost!\n", defenderPlayer);
-				playerQuit(defenderPlayer, &playerNumber, upLeft, upRight, downLeft, downRight); // remove player from game
+				playerQuit(defenderPlayer, playerNumber, upLeft, upRight, downLeft, downRight); // remove player from game
 			}
 		}
 		else if(player[defenderPlayer].strength > 70)  // if the defender points is greater than 70
@@ -245,14 +277,14 @@ void attack(int currPlayer, int playerNumber, struct slot **upLeft, struct slot 
 			if (player[currPlayer].lifePoints <= 0) // if players life points less than or equal to zero
 			{
 				printf("player %d lost!\n", currPlayer);
-				playerQuit(currPlayer, &playerNumber, upLeft, upRight, downLeft, downRight); // remove player from game
+				playerQuit(currPlayer, playerNumber, upLeft, upRight, downLeft, downRight); // remove player from game
 			}
 		}
 	}
 	else if (attackType == NEAR && z > 1)
 	{
 		 printf("You can't attack, the player must be on the same slot or one slot away for a near attack\n");
-		 attack(currPlayer, playerNumber, upLeft, upRight, downLeft, downRight);
+		 playerTurn(currPlayer, playerNumber, upLeft, upRight, downLeft, downRight);
 	}
 
 	if (attackType == DISTANT && z > 1 && z < 5) // only performed against players who are a distance 2-4 slots away
@@ -265,14 +297,14 @@ void attack(int currPlayer, int playerNumber, struct slot **upLeft, struct slot 
 			if (player[defenderPlayer].lifePoints < 0)
 			{
 				printf("player %d lost!\n", defenderPlayer);
-				playerQuit(defenderPlayer, &playerNumber, upLeft, upRight, downLeft, downRight); // remove player from game
+				playerQuit(defenderPlayer, playerNumber, upLeft, upRight, downLeft, downRight); // remove player from game
 			}
 		}
 	}
 	else if (attackType == DISTANT && (z <= 1 || z >= 5)) // if
 	{
 	 printf("The player must be 2-4 slots away in order to perform a distant attack\n");
-	 attack(currPlayer, playerNumber, upLeft, upRight, downLeft, downRight);
+	 playerTurn(currPlayer, playerNumber, upLeft, upRight, downLeft, downRight);
 	}
 
 	if (attackType == MAGIC && (player[currPlayer].smartness + player[currPlayer].magicSkills > 150)) {
@@ -281,11 +313,11 @@ void attack(int currPlayer, int playerNumber, struct slot **upLeft, struct slot 
 		if (player[defenderPlayer].lifePoints < 0)
 		{
 			printf("player %d lost!\n", defenderPlayer);
-			playerQuit(defenderPlayer, &playerNumber, upLeft, upRight, downLeft, downRight); // remove player from game
+			playerQuit(defenderPlayer, playerNumber, upLeft, upRight, downLeft, downRight); // remove player from game
 		}
 	} else if (attackType == MAGIC && (player[currPlayer].smartness + player[currPlayer].magicSkills <= 150)) {
 		printf("You do not meet the requirements to perform a magic attack\n");
-		attack(currPlayer, playerNumber, upLeft, upRight, downLeft, downRight);
+		playerTurn(currPlayer, playerNumber, upLeft, upRight, downLeft, downRight);
 	}
 }
 
